@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {
+
   products: Product[] = [];
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
@@ -87,5 +88,11 @@ export class ProductListComponent implements OnInit {
                                                 this.thePageSize = data.page.size;
                                                 this.theTotalElements = data.page.totalElements;
                                               });
+  }
+
+  updatePageSize(pageSize: string) {
+    this.thePageSize = +pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
   }
 }
