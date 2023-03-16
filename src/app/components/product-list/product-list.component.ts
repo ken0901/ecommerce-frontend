@@ -121,7 +121,7 @@ export class ProductListComponent implements OnInit {
     };
     }
 
-    addToCard(theProduct: Product) {
+    addToCart(theProduct: Product) {
 
         const theCartItem = new CartItem(theProduct);
 
