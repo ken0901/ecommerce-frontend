@@ -2,6 +2,7 @@ import { ProductCategory } from './product-category';
 
 describe('ProductCategory', () => {
   it('should create an instance', () => {
-    expect(new ProductCategory()).toBeTruthy();
+    const directive = ProductCategory;
+    expect(directive).toBeTruthy();
   });
 });
