@@ -12,6 +12,14 @@ export class CartService {
     totalPrice: Subject<number> = new BehaviorSubject<number>(0);
     totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
+    // Subject - Does not keep a buffer of previous events.
+    //         - Subscriber only receives new events after they are subscribed.
+    // ReplaySubject - Has a buffer of all previous events.
+    //               - Once subscribed, subscriber receives a replay of all previous events.
+    // BehaviorSubject - Has a buffer of the last event.
+    //                 - Once subscribed, subscriber receives the latest event sent prior to subscribing.
+
+
     constructor() {}
 
     addToCart(theCartItem: CartItem){
