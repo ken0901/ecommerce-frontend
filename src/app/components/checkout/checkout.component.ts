@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { KenShopFormService } from 'src/app/services/ken-shop-form.service';
 import { KenShopValidators } from 'src/app/validators/ken-shop-validators';
 
@@ -26,9 +27,12 @@ export class CheckoutComponent implements OnInit {
   billingAddressSates: State[] = [];
   
   constructor(private formBuilder:FormBuilder,
-              private kenShopFormService: KenShopFormService) { }
+              private kenShopFormService: KenShopFormService,
+              private cartService: CartService) { }
   
   ngOnInit(): void {
+    this.reviewCartDetails();
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [Validators.required, Validators.minLength(2), KenShopValidators.notOnlyWhitespace]),
@@ -85,6 +89,18 @@ export class CheckoutComponent implements OnInit {
         console.log("Retrieved countries: " + JSON.stringify(data));
         this.countries = data;
       }
+    );
+  }
+
+  reviewCartDetails() {
+
+    // subscribe to cartService.totalQuantity
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+    // subscribe to cartService.totalPrice
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
     );
   }
 
