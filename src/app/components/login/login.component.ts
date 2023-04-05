@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(@Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
 
     this.oktaSignin = new OktaSignIn({
-      logo: 'assets/images/logo.png',
+      logo: 'assets/images/logo_kenShop.png',
       baseUrl: myAppconfig.oidc.issuer.split('/oauth2')[0],
       clientId: myAppconfig.oidc.clientId,
       redirectUri: myAppconfig.oidc.redirectUri,
@@ -29,6 +29,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.oktaSignin.remove();
+
+    this.oktaSignin.renderEl({
+      el: '#okta-sign-in-widget'}, // this name should be same as div tag id in login.component.html
+      (response: any) => {
+        if(response.status === 'SUCCESS'){
+          this.oktaAuth.signInWithRedirect();
+        }
+      },
+      (error: any) => {
+        throw error;
+      }
+    );
   }
 
 }
