@@ -19,8 +19,21 @@ export class CartService {
     // BehaviorSubject - Has a buffer of the last event.
     //                 - Once subscribed, subscriber receives the latest event sent prior to subscribing.
 
+    // storage: Storage = sessionStorage;
+    storage: Storage = localStorage;
 
-    constructor() {}
+    constructor() {
+
+        // read data from storage
+        let data = JSON.parse(this.storage.getItem('cartItems'));
+
+        if (data != null){
+            this.cartItem = data;
+
+            // compute totals based on the data that is read from storage
+            this.computeCartTotals();
+        }
+    }
 
     addToCart(theCartItem: CartItem){
 
@@ -84,6 +97,9 @@ export class CartService {
 
         // log cart data just for debugging purposes
         this.logCartData(totalPriceValue,totalQuantityValue);
+
+        // persist cart data
+        this.persistCartItem();
     }
 
     logCartData(totalPriceValue: number, totalQuantityValue: number) {
@@ -108,5 +124,9 @@ export class CartService {
 
             this.computeCartTotals();
         }
+    }
+
+    persistCartItem(){
+        this.storage.setItem('cartItems', JSON.stringify(this.cartItem));
     }
 }
