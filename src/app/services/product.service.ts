@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Product } from '../common/product';
 import { ProductCategory } from '../common/product-category';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ import { ProductCategory } from '../common/product-category';
 export class ProductService {
   
   
-  private baseUrl = 'http://localhost:8080/api/';
+  private baseUrl = environment.kenShopApiUrl;
   
-  private productUrl = this.baseUrl+'products';
+  private productUrl = this.baseUrl+'/products';
   
-  private categoryUrl = this.baseUrl+'product-category';
+  private categoryUrl = this.baseUrl+'/product-category';
   
   constructor(private httpClient: HttpClient) { }
   
